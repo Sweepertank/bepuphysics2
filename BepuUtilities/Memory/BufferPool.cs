@@ -427,7 +427,7 @@ namespace BepuUtilities.Memory
             return GetCapacityForCount<T>(count);
         }
 
-#if DEBUG
+#if false
         ~BufferPool()
         {
             var totalBlockCount = 0;
