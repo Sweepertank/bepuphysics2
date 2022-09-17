@@ -206,6 +206,14 @@ namespace BepuPhysics.Collidables
                 //Any points that are collinear *with the previous edge* cannot be a part of the current edge without numerical failure; the previous edge should include them.
                 if (candidateX <= 0)
                 {
+                    if (candidateY > 0)
+                    {
+                        throw new InvalidOperationException(
+                            "Previous edge should include any collinear points, so this edge should not see any further collinear points beyond its start." +
+                            "If you run into this, it implies you've found some content that violates the convex huller's assumptions, and I'd appreciate it if you reported it on github.com/bepu/bepuphysics2/issues!" + 
+                            "A .obj or other simple demos-compatible reproduction case would help me fix it."
+                        );
+                    }
                     Debug.Assert(candidateY <= 0,
                         "Previous edge should include any collinear points, so this edge should not see any further collinear points beyond its start." +
                         "If you run into this, it implies you've found some content that violates the convex huller's assumptions, and I'd appreciate it if you reported it on github.com/bepu/bepuphysics2/issues!" + 
@@ -818,6 +826,10 @@ namespace BepuPhysics.Collidables
                     previousOffset = offset;
                 }
                 var length = faceNormal.Length();
+                if (length <= 1e-10f || float.IsNaN(length))
+                {
+                    throw new InvalidOperationException("Convex hull procedure should not output degenerate faces.");
+                }
                 Debug.Assert(length > 1e-10f, "Convex hull procedure should not output degenerate faces.");
                 faceNormal /= length;
                 BundleIndexing.GetBundleIndices(i, out var boundingPlaneBundleIndex, out var boundingPlaneInnerIndex);

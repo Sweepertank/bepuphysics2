@@ -747,6 +747,10 @@ namespace BepuUtilities.Collections
         [Conditional("DEBUG")]
         void ValidateUnsafeAdd()
         {
+            if (Count >= Span.Length)
+            {
+                throw new InvalidOperationException("Unsafe adders can only be used if the capacity is guaranteed to hold the new size.");
+            }
             Debug.Assert(Count < Span.Length, "Unsafe adders can only be used if the capacity is guaranteed to hold the new size.");
         }
         [Conditional("DEBUG")]
