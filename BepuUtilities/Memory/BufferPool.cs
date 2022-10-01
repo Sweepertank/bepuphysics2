@@ -427,6 +427,7 @@ namespace BepuUtilities.Memory
             return GetCapacityForCount<T>(count);
         }
 
+// @BepuChange
 #if false
         ~BufferPool()
         {

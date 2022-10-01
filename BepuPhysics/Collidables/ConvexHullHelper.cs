@@ -206,6 +206,7 @@ namespace BepuPhysics.Collidables
                 //Any points that are collinear *with the previous edge* cannot be a part of the current edge without numerical failure; the previous edge should include them.
                 if (candidateX <= 0)
                 {
+                    // @BepuChange
                     if (candidateY > 0)
                     {
                         throw new InvalidOperationException(
@@ -826,6 +827,7 @@ namespace BepuPhysics.Collidables
                     previousOffset = offset;
                 }
                 var length = faceNormal.Length();
+                // @BepuChange
                 if (length <= 1e-10f || float.IsNaN(length))
                 {
                     throw new InvalidOperationException("Convex hull procedure should not output degenerate faces.");

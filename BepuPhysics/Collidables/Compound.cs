@@ -54,7 +54,8 @@ namespace BepuPhysics.Collidables
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Compound(Buffer<CompoundChild> children)
         {
-            Debug.Assert(children.Length > 0, "Compounds must have a nonzero number of children.");
+            // @BepuChange
+            //Debug.Assert(children.Length > 0, "Compounds must have a nonzero number of children.");
             Children = children;
         }
 
@@ -137,7 +138,16 @@ namespace BepuPhysics.Collidables
 
         public void ComputeBounds(in Quaternion orientation, Shapes shapeBatches, out Vector3 min, out Vector3 max)
         {
-            ComputeChildBounds(Children[0], orientation, shapeBatches, out min, out max);
+            // @BepuChange
+            if (Children.Length > 0)
+            {
+                ComputeChildBounds(Children[0], orientation, shapeBatches, out min, out max);
+            }
+            else
+            {
+                min = Vector3.Zero;
+                max = Vector3.Zero;
+            }
             for (int i = 1; i < Children.Length; ++i)
             {
                 ref var child = ref Children[i];

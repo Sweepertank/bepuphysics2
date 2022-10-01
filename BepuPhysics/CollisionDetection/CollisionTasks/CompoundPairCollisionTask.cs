@@ -58,8 +58,9 @@ namespace BepuPhysics.CollisionDetection.CollisionTasks
             for (int pairIndex = 0; pairIndex < batch.Count; ++pairIndex)
             {
                 overlaps.GetPairOverlaps(pairIndex, out var pairOverlaps, out var subpairQueries);
-                var totalOverlapCountForPair = pairOverlaps[0].Count;
-                for (int j = 1; j < pairOverlaps.Length; ++j)
+                // @BepuChange
+                var totalOverlapCountForPair = 0;
+                for (int j = 0; j < pairOverlaps.Length; ++j)
                 {
                     totalOverlapCountForPair += pairOverlaps[j].Count;
                 }
